@@ -63,7 +63,7 @@ public class HttpRequest {
     }
 
     public void execute(String url) {
-        httpRequestListener.onRequestStarted();
+        httpRequestListener.onRequestStarted(WSName);
         try {
             if (URLUtil.isValidUrl(url)) {
                 int reqMethod = Request.Method.GET;
@@ -79,6 +79,8 @@ public class HttpRequest {
                         try {
                             if (context != null && isJSONValid(response)) {
                                 httpRequestListener.onSuccess(response, WSName);
+                            }else {
+                                httpRequestListener.onError(INVALID_RESPONSE_ERROR);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
